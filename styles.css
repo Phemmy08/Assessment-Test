@@ -296,3 +296,89 @@
                 grid-template-columns: 1fr;
             }
         }
+
+
+
+
+
+        .instruction-box {
+  background-color: #fefefe;
+  border-left: 4px solid #3498db;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.03);
+  margin-bottom: 1.5rem;
+}
+
+.instruction-box p {
+  margin-bottom: 1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.excel-steps {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+.excel-steps li {
+  margin-bottom: 0.5rem;
+}
+
+/* Download Button */
+.btn-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #27ae60;
+  color: #fff;
+  padding: 0.75rem 1.2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.btn-download:hover {
+  background-color: #219150;
+}
+
+/* File Upload */
+.file-upload label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.file-info {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+.file-info:hover {
+  background-color: #eef9ff;
+  border-color: #3498db;
+}
+
+.file-info i {
+  font-size: 2rem;
+  color: #3498db;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.file-info span {
+  font-size: 0.95rem;
+  color: #555;
+}
