@@ -251,6 +251,22 @@
   </div>
 </section>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const fileBox = document.getElementById('excelUploadBox');
+  const fileInput = document.getElementById('excelCompletedFile');
+  const fileLabel = document.getElementById('excelFileLabel');
+
+  fileBox.addEventListener('click', () => fileInput.click());
+
+  fileInput.addEventListener('change', () => {
+    const name = fileInput.files.length ? fileInput.files[0].name : 'Click to upload or drag and drop';
+    fileLabel.textContent = name;
+  });
+});
+</script>
+
+
 
                 <!-- Section 7: Remote Work Readiness -->
                 <div class="section">
