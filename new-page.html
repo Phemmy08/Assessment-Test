@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velocity Flex Company - Employment Assessment Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            color: #667eea;
+            font-size: 1.3em;
+            font-weight: 400;
+        }
+
+        .intro-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .intro-section h3 {
+            color: #2c3e50;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .intro-section p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .assessment-form {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            background: #fafafa;
+        }
+
+        .section.completed {
+            border-color: #28a745;
+            background: #f8fff9;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .section-title {
+            color: #2c3e50;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .section-points {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .role-tasks {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            display: none;
+        }
+
+        .role-tasks.active {
+            display: block;
+        }
+
+        .role-tasks h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .role-tasks p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .scoring-info {
+            background: #e8f4f8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .scoring-info h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .scoring-info ul {
+            margin-left: 20px;
+        }
+
+        .scoring-info li {
+            margin-bottom: 5px;
+        }
+
+        .current-score {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2c3e50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .file-upload-note {
+            background: #fff3cd;
+            border: 2px solid #ffeaa7;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        .file-upload-note h3 {
+            color: #856404;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .file-upload-note p {
+            color: #856404;
+            line-height: 1.6;
+        }
+
+        .success-message {
+            background: #d4edda;
+            border: 2px solid #c3e6cb;
+            color: #155724;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            border: 2px solid #f5c6cb;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .current-score {
+                position: static;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .radio-group {
+                flex-direction: column;
+            }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Velocity Flex Company</h1>
+            <h2>Official Employment Assessment Portal</h2>
+        </div>
+
+        <div class="intro-section">
+            <h3>📝 INTRODUCTION</h3>
+            <p>Welcome to the official assessment portal for Velocity Flex Company. This evaluation helps us determine your readiness for remote employment, based on communication, critical thinking, typing speed, and role-specific skills. Note: A minimum score of 70% is required to move forward in the hiring process. Selected applicants will receive interview details within 24–48 hours.</p>
+        </div>
+
+        <div class="current-score">
+            <div>Current Score: <span id="current-score">0</span> / 65</div>
+            <div style="font-size: 0.9em; margin-top: 5px;">Progress: <span id="progress-percent">0%</span></div>
+        </div>
+
+        <div class="assessment-form">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+
+            <form id="assessment-form" action="https://formsubmit.co/velocityflexstaffing@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="New Employment Assessment Submission">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://velocityflex.com/thank-you">
+
+                <!-- Section 1: Typing Speed -->
+                <div class="section" id="section-1">
+                    <div class="section-header">
+                        <h3 class="section-title">SECTION 1 – TYPING SPEED & ACCURACY</h3>
+                        <span class="section-points">10 Points</span>
+                    </div>
+                    <p style="margin-bottom: 15px;">Please visit <strong>TypingTest.com</strong> and take the 1-minute typing test. Take a screenshot of your results.</p>
+                    
+                    <div class="form-group">
+                        <label for="typing-speed">Your Typing Speed (WPM):</label>
+                        <input type="number" id="typing-speed" name="typing_speed" min="0" max="200" required>
+                    </div>
+
+                    <div class="scoring-info">
+                        <h4>Scoring System:</h4>
+                        <ul>
+                            <li>0–34 WPM = 0 points</li>
+                            <li>35–39 WPM = 5 points</li>
+                            <li>40+ WPM = 10 points</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Section 2: Personal & Technical Setup -->
+                <div class="section" id="section-2">
+                    <div class="section-header">
+                        <h3 class="section-title">SECTION 2 – PERSONAL & TECHNICAL SETUP</h3>
+                        <span class="section-points">5 Points</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="full-name">Full Name:</label>
+                        <input type="text" id="full-name" name="full_name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="device">Device in Use:</label>
+                        <select id="device" name="device" required>
+                            <option value="">Select your device</option>
+                            <option value="laptop">Laptop</option>
+                            <option value="desktop">Desktop</option>
+                            <option value="tablet">Tablet</option>
+                            <option value="none">None</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Is Your Internet Stable?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="internet-yes" name="internet_stable" value="yes" required>
+                                <label for="internet-yes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="internet-no" name="internet_stable" value="no" required>
+                                <label for="internet-no">No</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="internet-sometimes" name="internet_stable" value="sometimes" required>
+                                <label for="internet-sometimes">Sometimes</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p style="margin-top: 15px; font-style: italic;">Please take a screenshot of your internet speed test and email it with your other attachments.</p>
+                </div>
+
+                <!-- Section 3: Computer & Software Skills -->
+                <div class="section" id="section-3">
+                    <div class="section-header">
+                        <h3 class="section-title">SECTION 3 – COMPUTER & SOFTWARE SKILLS</h3>
+                        <span class="section-points">10 Points</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Q1: Which of the following tools have you used? (Select all that apply)</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="google-docs" name="tools[]" value="google-docs">
+                                <label for="google-docs">Google Docs</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="ms-word" name="tools[]" value="ms-word">
+                                <label for="ms-word">MS Word</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="google-sheets" name="tools[]" value="google-sheets">
+                                <label for="google-sheets">Google Sheets</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="excel" name="tools[]" value="excel">
+                                <label for="excel">Excel</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="zoom" name="tools[]" value="zoom">
+                                <label for="zoom">Zoom</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="slack" name="tools[]" value="slack">
+                                <label for="slack">Slack</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="gmail" name="tools[]" value="gmail">
+                                <label for="gmail">Gmail</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="crm" name="tools[]" value="crm">
+                                <label for="crm">CRM Software</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="document-organization">Q2: How do you organize your digital documents and files?</label>
+                        <textarea id="document-organization" name="document_organization" placeholder="Describe your approach to organizing digital files and documents..." required></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 4: Scenario-Based Judgement -->
+                <div class="section" id="section-4">
+                    <div class="section-header">
+                        <h3 class="section-title">SECTION 4 – SCENARIO-BASED JUDGEMENT</h3>
+                        <span class="section-points">10 Points</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="scenario-1">Scenario 1: A client is upset about a delayed order and is demanding a full refund. How would you handle this situation?</label>
+                        <textarea id="scenario-1" name="scenario_1" placeholder="Describe your approach to handling this customer complaint..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="scenario-2">Scenario 2: You're in the middle of an important Zoom meeting when your internet goes out. What steps would you take?</label>
+                        <textarea id="scenario-2" name="scenario_2" placeholder="Describe the steps you would take to handle this technical issue..." required></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 5: Role-Specific Tasks -->
+                <div class="section" id="section-5">
+                    <div class="section-header">
+                        <h3 class="section-title">SECTION 5 – ROLE-SPECIFIC TASKS</h3>
+                        <span class="section-points">15 Points</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select the role you are applying for:</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="data-entry" name="role" value="data-entry" required>
+                                <label for="data-entry">Data Entry Clerk</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="customer-support" name="role" value="customer-support" required>
+                                <label for="customer-support">Customer Support Rep</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="virtual-assistant" name="role" value="virtual-assistant" required>
+                                <label for="virtual-assistant">Virtual Assistant</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="payroll-clerk" name="role" value="payroll-clerk" required>
+                                <label for="payroll-clerk">Payroll Clerk</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="accounting-manager" name="role" value="accounting-manager" required>
+                                <label for="accounting-manager">Accounting Manager</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="social-media" name="role" value="social-media" required>
+                                <label for="social-media">Social Media Manager</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="role-tasks" id="data-entry-tasks">
+                        <h4>Data Entry Clerk Tasks:</h4>
+                        <p>• Accurately input customer information from handwritten forms into digital databases</p>
+                        <p>• Verify data accuracy and completeness before submission</p>
+                        <p>• Maintain data confidentiality and security protocols</p>
+                        <p>• Generate reports and summaries as needed</p>
+                    </div>
+
+                    <div class="role-tasks" id="customer-support-tasks">
+                        <h4>Customer Support Representative Tasks:</h4>
+                        <p>• Respond to customer inquiries via email, chat, and phone</p>
+                        <p>• Troubleshoot product issues and provide solutions</p>
+                        <p>• Escalate complex issues to appropriate departments</p>
+                        <p>• Maintain customer satisfaction and loyalty</p>
+                    </div>
+
+                    <div class="role-tasks" id="virtual-assistant-tasks">
+                        <h4>Virtual Assistant Tasks:</h4>
+                        <p>• Manage executive calendars and schedule appointments</p>
+                        <p>• Handle email correspondence and communication</p>
+                        <p>• Organize and maintain digital files and documents</p>
+                        <p>• Assist with various administrative tasks as needed</p>
+                    </div>
+
+                    <div class="role-tasks" id="payroll-clerk-tasks">
+                        <h4>Payroll Clerk Tasks:</h4>
+                        <p>• Process employee timesheets and calculate wages</p>
+                        <p>• Maintain accurate payroll records and databases</p>
+                        <p>• Handle tax calculations and deductions</p>
+                        <p>• Assist with payroll-related inquiries from employees</p>
+                    </div>
+
+                    <div class="role-tasks" id="accounting-manager-tasks">
+                        <h4>Accounting Manager Tasks:</h4>
+                        <p>• Oversee financial record keeping and reporting</p>
+                        <p>• Manage accounts payable and receivable</p>
+                        <p>• Prepare financial statements and budgets</p>
+                        <p>• Ensure compliance with accounting standards and regulations</p>
+                    </div>
+
+                    <div class="role-tasks" id="social-media-tasks">
+                        <h4>Social Media Manager Tasks:</h4>
+                        <p>• Create and schedule engaging social media content</p>
+                        <p>• Monitor social media platforms and respond to comments</p>
+                        <p>• Analyze social media metrics and performance</p>
+                        <p>• Develop social media strategies to increase engagement</p>
+                    </div>
+                </div>
+
+                <!-- Section 6: Excel Assessment -->
+                <div class="section" id="section-6">
+                    <div class="section-header">
+                        <h3 class="section-title">SECTION 6 – EXCEL ASSESSMENT</h3>
+                        <span class="section-points">10 Points</span>
+                    </div>
+
+                    <p style="margin-bottom: 15px;">Create a basic Excel spreadsheet with the following:</p>
+                    <ul style="margin-bottom: 15px; margin-left: 20px;">
+                        <li>A table with 5 columns: Name, Age, Department, Salary, Bonus</li>
+                        <li>Add 5 sample employee records</li>
+                        <li>Calculate total salary using SUM function</li>
+                        <li>Add conditional formatting to highlight salaries above $50,000</li>
+                        <li>Save as "Excel_Assessment_[YourName].xlsx"</li>
+                    </ul>
+
+                    <div class="scoring-info">
+                        <h4>Scoring Criteria:</h4>
+                        <ul>
+                            <li>Correct table structure (2 points)</li>
+                            <li>Accurate data entry (2 points)</li>
+                            <li>Proper use of SUM function (3 points)</li>
+                            <li>Conditional formatting applied (3 points)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Section 7: Remote Work Readiness -->
+                <div class="section" id="section-7">
+                    <div class="section-header">
+                        <h3 class="section-title">SECTION 7 – REMOTE WORK READINESS</h3>
+                        <span class="section-points">5 Points</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="focus-strategy">How do you stay focused while working remotely?</label>
+                        <textarea id="focus-strategy" name="focus_strategy" placeholder="Describe your strategies for maintaining focus during remote work..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="system-crash">What steps do you take when your system crashes during work?</label>
+                        <textarea id="system-crash" name="system_crash" placeholder="Describe your approach to handling system crashes during work..." required></textarea>
+                    </div>
+                </div>
+
+                <!-- Section 8: Video Introduction -->
+                <div class="section" id="section-8">
+                    <div class="section-header">
+                        <h3 class="section-title">SECTION 8 – VIDEO INTRODUCTION</h3>
+                        <span class="section-points">Bonus 5 Points</span>
+                    </div>
+
+                    <p style="margin-bottom: 15px;">Create a 30-60 second video introduction including:</p>
+                    <ul style="margin-bottom: 15px; margin-left: 20px;">
+                        <li>Your name and the position you're applying for</li>
+                        <li>Brief overview of your relevant experience</li>
+                        <li>Why you're interested in remote work</li>
+                        <li>What makes you a good fit for Velocity Flex Company</li>
+                    </ul>
+
+                    <div class="form-group">
+                        <label for="video-completed">Video Introduction Completed:</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="video-yes" name="video_completed" value="yes">
+                                <label for="video-yes">Yes, I will email the video</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="video-no" name="video_completed" value="no">
+                                <label for="video-no">No, I prefer to skip this section</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" id="total-score" name="total_score" value="0">
+                <input type="hidden" id="sections-completed" name="sections_completed" value="0">
+
+                <button type="submit" class="submit-btn" id="submit-btn">Submit Assessment</button>
+            </form>
+
+            <div class="success-message" id="success-message">
+                <h3>✅ Assessment Submitted Successfully!</h3>
+                <p>Thank you for submitting your assessment. Selected applicants will receive interview details within 24–48 hours.</p>
+            </div>
+
+            <div class="error-message" id="error-message">
+                <h3>❌ Submission Error</h3>
+                <p>There was an error submitting your assessment. Please check all required fields and try again.</p>
+            </div>
+        </div>
+
+        <div class="file-upload-note">
+            <h3>📎 IMPORTANT: File Attachments</h3>
+            <p>For all file attachments and screenshots required in this assessment, please email them directly to <strong>velocityflex@gmail.com</strong> with the subject line "Assessment Attachments - [Your Full Name]". Include your name and the section each file corresponds to.</p>
+        </div>
+    </div>
+
+    <script>
+        let currentScore = 0;
+        const maxScore = 70; // 65 regular + 5 bonus
+
+        // Form elements
+        const form = document.getElementById('assessment-form');
+        const progressFill = document.getElementById('progress-fill');
+        const currentScoreElement = document.getElementById('current-score');
+        const progressPercent = document.getElementById('progress-percent');
+        const submitBtn = document.getElementById('submit-btn');
+
+        // Initialize
+        updateScore();
+        updateProgress();
+
+        // Event listeners for real-time scoring
+        document.getElementById('typing-speed').addEventListener('input', calculateTypingScore);
+        document.querySelectorAll('input[name="internet_stable"]').forEach(radio => {
+            radio.addEventListener('change', calculateSection2Score);
+        });
+        document.getElementById('device').addEventListener('change', calculateSection2Score);
+        document.querySelectorAll('input[name="tools[]"]').forEach(checkbox => {
+            checkbox.addEventListener('change', calculateSection3Score);
+        });
+        document.getElementById('document-organization').addEventListener('input', calculateSection3Score);
+        document.getElementById('scenario-1').addEventListener('input', calculateSection4Score);
+        document.getElementById('scenario-2').addEventListener('input', calculateSection4Score);
+        document.querySelectorAll('input[name="role"]').forEach(radio => {
+            radio.addEventListener('change', showRoleTasks);
+        });
+        document.getElementById('focus-strategy').addEventListener('input', calculateSection7Score);
+        document.getElementById('system-crash').addEventListener('input', calculateSection7Score);
+        document.querySelectorAll('input[name="video_completed"]').forEach(radio => {
+            radio.addEventListener('change', calculateSection8Score);
+        });
+
+        // Required fields validation
+        const requiredFields = [
+            'full-name', 'email', 'typing-speed', 'device', 'document-organization',
+            'scenario-1', 'scenario-2', 'focus-strategy', 'system-crash'
+        ];
+
+        requiredFields.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            if (field) {
+                field.addEventListener('input', validateForm);
+                field.addEventListener('change', validateForm);
+            }
+        });
+
+        // Radio button validation
+        document.querySelectorAll('input[name="internet_stable"]').forEach(radio => {
+            radio.addEventListener('change', validateForm);
+        });
+        document.querySelectorAll('input[name="role"]').forEach(radio => {
+            radio.addEventListener('change', validateForm);
+        });
+
+        function calculateTypingScore() {
+            const speed = parseInt(document.getElementById('typing-speed').value) || 0;
+            let score = 0;
+            
+            if (speed >= 40) score = 10;
+            else if (speed >= 35) score = 5;
+            else score = 0;
+            
+            updateSectionScore(1, score);
+        }
+
+        function calculateSection2Score() {
+            const name = document.getElementById('full-name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const device = document.getElementById('device').value;
+            const internet = document.querySelector('input[name="internet_stable"]:checked');
+            
+            let score = 0;
+            if (name && email && device && internet) {
+                score = 5;
+            }
+            
+            updateSectionScore(2, score);
+        }
+
+        function calculateSection3Score() {
+            const checkedTools = document.querySelectorAll('input[name="tools[]"]:checked').length;
+            const documentOrg = document.getElementById('document-organization').value.trim();
+            
+            let score = 0;
+            if (checkedTools >= 4 && documentOrg.length >= 50) {
+                score = 10;
+            } else if (checkedTools >= 2 && documentOrg.length >= 20) {
+                score = 7;
+            } else if (checkedTools >= 1 && documentOrg.length >= 10) {
+                score = 5;
+            }
+            
+            updateSectionScore(3, score);
+        }
+
+        function calculateSection4Score() {
+            const scenario1 = document.getElementById('scenario-1').value.trim();
+            const scenario2 = document.getElementById('scenario-2').value.trim();
+            
+            let score = 0;
+            if (scenario1.length >= 100 && scenario2.length >= 100) {
+                score = 10;
+            } else if (scenario1.length >= 50 && scenario2.length >= 50) {
+                score = 7;
+            } else if (scenario1.length >= 20 && scenario2.length >= 20) {
+                score = 5;
+            }
+            
+            updateSectionScore(4, score);
+        }
+
+        function calculateSection7Score() {
+            const focus = document.getElementById('focus-strategy').value.trim();
+            const crash = document.getElementById('system-crash').value.trim();
+            
+            let score = 0;
+            if (focus.length >= 50 && crash.length >= 50) {
+                score = 5;
+            } else if (focus.length >= 20 && crash.length >= 20) {
+                score = 3;
+            } else if (focus.length >= 10 && crash.length >= 10) {
+                score = 2;
+            }
+            
+            updateSectionScore(7, score);
+        }
+
+        function calculateSection8Score() {
+            const video = document.querySelector('input[name="video_completed"]:checked');
+            let score = 0;
+            
+            if (video && video.value === 'yes') {
+                score = 5;
+            }
+            
+            updateSectionScore(8, score);
+        }
+
+        function showRoleTasks() {
+            // Hide all role tasks
+            document.querySelectorAll('.role-tasks').forEach(task => {
+                task.classList.remove('active');
+            });
+            
+            // Show selected role tasks
+            const selectedRole = document.querySelector('input[name="role"]:checked');
+            if (selectedRole) {
+                const roleTasksId = selectedRole.value + '-tasks';
+                const roleTasksElement = document.getElementById(roleTasksId);
+                if (roleTasksElement) {
+                    roleTasksElement.classList.add('active');
+                }
+                
+                // Award points for role selection
+                updateSectionScore(5, 15);
+            }
+        }
+
+        // Section scoring system
+        const sectionScores = {
+            1: 0, // Typing Speed
+            2: 0, // Personal & Technical
+            3: 0, // Computer Skills
+            4: 0, // Scenario-based
+            5: 0, // Role-specific
+            6: 10, // Excel (full points - completed offline)
+            7: 0, // Remote Work
+            8: 0  // Video (bonus)
+        };
+
+        function updateSectionScore(section, score) {
+            sectionScores[section] = score;
+            updateScore();
+            updateProgress();
+            markSectionCompleted(section);
+        }
+
+        function updateScore() {
+            currentScore = Object.values(sectionScores).reduce((sum, score) => sum + score, 0);
+            currentScoreElement.textContent = currentScore;
+            
+            // Update hidden field
+            document.getElementById('total-score').value = currentScore;
+        }
+
+        function updateProgress() {
+            const progress = Math.min((currentScore / maxScore) * 100, 100);
+            progressFill.style.width = progress + '%';
+            progressPercent.textContent = Math.round(progress) + '%';
+        }
+
+        function markSectionCompleted(section) {
+            const sectionElement = document.getElementById(`section-${section}`);
+            if (sectionElement && sectionScores[section] > 0) {
+                sectionElement.classList.add('completed');
+            }
+        }
+
+        function validateForm() {
+            let isValid = true;
+            let completedSections = 0;
+            
+            // Check required fields
+            const requiredInputs = [
+                'full-name', 'email', 'typing-speed', 'device', 
+                'document-organization', 'scenario-1', 'scenario-2',
+                'focus-strategy', 'system-crash'
+            ];
+            
+            requiredInputs.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (field && !field.value.trim()) {
+                    isValid = false;
+                }
+            });
+            
+            // Check radio buttons
+            const radioGroups = ['internet_stable', 'role'];
+            radioGroups.forEach(groupName => {
+                const checked = document.querySelector(`input[name="${groupName}"]:checked`);
+                if (!checked) {
+                    isValid = false;
+                }
+            });
+            
+            // Count completed sections
+            Object.keys(sectionScores).forEach(section => {
+                if (sectionScores[section] > 0) {
+                    completedSections++;
+                }
+            });
+            
+            // Update hidden field
+            document.getElementById('sections-completed').value = completedSections;
+            
+            // Enable/disable submit button
+            submitBtn.disabled = !isValid;
+            
+            if (isValid && currentScore >= 50) {
+                submitBtn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
+                submitBtn.textContent = 'Submit Assessment';
+            } else if (isValid) {
+                submitBtn.style.background = 'linear-gradient(135deg, #ffc107, #fd7e14)';
+                submitBtn.textContent = 'Submit Assessment (Low Score)';
+            } else {
+                submitBtn.style.background = '#ccc';
+                submitBtn.textContent = 'Complete Required Fields';
+            }
+        }
+
+        // Form submission handling
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (currentScore < 50) {
+                const proceed = confirm(`Your current score is ${currentScore}/70. The minimum recommended score is 70%. Are you sure you want to submit?`);
+                if (!proceed) {
+                    return;
+                }
+            }
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            
+            // Simulate form submission (in real implementation, this would submit to FormSubmit)
+            setTimeout(() => {
+                document.getElementById('success-message').style.display = 'block';
+                document.querySelector('.assessment-form').style.display = 'none';
+                
+                // Scroll to success message
+                document.getElementById('success-message').scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+            }, 2000);
+        });
+
+        // Initialize form validation
+        validateForm();
+
+        // Smooth scrolling for better UX
+        document.querySelectorAll('input, select, textarea').forEach(element => {
+            element.addEventListener('focus', function() {
+                this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+        });
+
+        // Auto-save functionality (using localStorage for demo - remove in production)
+        function saveFormData() {
+            const formData = new FormData(form);
+            const data = {};
+            
+            for (let [key, value] of formData.entries()) {
+                if (data[key]) {
+                    if (Array.isArray(data[key])) {
+                        data[key].push(value);
+                    } else {
+                        data[key] = [data[key], value];
+                    }
+                } else {
+                    data[key] = value;
+                }
+            }
+            
+            // In a real implementation, you might want to save to server
+            // localStorage.setItem('assessmentData', JSON.stringify(data));
+        }
+
+        // Save form data on input
+        form.addEventListener('input', saveFormData);
+        form.addEventListener('change', saveFormData);
+
+        // Mobile-specific enhancements
+        if (window.innerWidth <= 768) {
+            // Make sections collapsible on mobile
+            document.querySelectorAll('.section-title').forEach(title => {
+                title.style.cursor = 'pointer';
+                title.addEventListener('click', function() {
+                    const section = this.closest('.section');
+                    const content = section.querySelector('.form-group, .radio-group, .checkbox-group');
+                    if (content) {
+                        const isHidden = content.style.display === 'none';
+                        content.style.display = isHidden ? 'block' : 'none';
+                    }
+                });
+            });
+        }
+
+        // Accessibility improvements
+        document.querySelectorAll('input, select, textarea').forEach(element => {
+            element.addEventListener('invalid', function() {
+                this.style.borderColor = '#dc3545';
+            });
+            
+            element.addEventListener('input', function() {
+                if (this.checkValidity()) {
+                    this.style.borderColor = '#28a745';
+                } else {
+                    this.style.borderColor = '#dc3545';
+                }
+            });
+        });
+
+        // Performance optimization: Debounce score calculations
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Apply debouncing to text inputs
+        const debouncedCalculateSection3 = debounce(calculateSection3Score, 300);
+        const debouncedCalculateSection4 = debounce(calculateSection4Score, 300);
+        const debouncedCalculateSection7 = debounce(calculateSection7Score, 300);
+
+        document.getElementById('document-organization').addEventListener('input', debouncedCalculateSection3);
+        document.getElementById('scenario-1').addEventListener('input', debouncedCalculateSection4);
+        document.getElementById('scenario-2').addEventListener('input', debouncedCalculateSection4);
+        document.getElementById('focus-strategy').addEventListener('input', debouncedCalculateSection7);
+        document.getElementById('system-crash').addEventListener('input', debouncedCalculateSection7);
+    </script>
+</body>
+</html>
